@@ -2,11 +2,10 @@ package org.example;
 
 public class FindMissinNumber {
 
-    private int find(int arr){
-        int len = arr.length;
-        int sum = (len(len+1))/2;
+    private int find(int[] arr){
+        int sum = ((arr.length+1) *(arr.length+2))/2;
         int sumOfArr = sumOfArray(arr);
-        return sumOfArr - sum;
+        return  sum-sumOfArr;
     }
 
     private int sumOfArray(int[] arr){
@@ -18,7 +17,8 @@ public class FindMissinNumber {
     }
 
     public static void main(String args[]){
-        System.out.println("Missing number is":new int[]{5,4,2,3});
+        FindMissinNumber findMissinNumber = new FindMissinNumber();
+        System.out.println("Missing number is "+findMissinNumber.find(new int[]{5,4,2,3}));
 
     }
 }
