@@ -1,5 +1,9 @@
 package org.example;
 
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class EasyProblems {
 
     public void largestElements(int[] array, int howMany){
@@ -118,10 +122,122 @@ public class EasyProblems {
         }
     }
 
+    public int removeElement(int[] nums, int val) {
+        int z=0;
+        for(int i =0;i<nums.length;i++)
+        {
+            if(nums[i]!=val){
+                nums[z]= nums[i];
+                z++;
+            }
+        }
+        return z;
+    }
+
+    public int removeDuplicates(int[] nums) {
+        int prev = nums[0];
+        int z=0;
+        for(int i=1;i<nums.length;i++){
+            if(nums[i]==prev){
+
+            }
+            else{
+                nums[z]= prev;
+                prev= nums[i];
+                z++;
+            }
+        }
+        nums[z]= prev;
+        return z;
+    }
+
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i=0;
+        int j=0;
+        int prev = nums1[0];
+        int k=0;
+        while(j<n){
+            if(nums1[i]<nums2[j]){
+//                nums1[k]=nums1[]
+                i++;
+            }
+            else if(nums2[j]<nums1[i]){
+                prev = nums1[i];
+                nums1[k] = nums2[j];
+                j++;
+            }
+        }
+
+    }
+
+
+    public int numUniqueEmails(String[] emails) {
+        Set<String> set = new HashSet<>();
+        for(String email:emails){
+            String[] names = email.split("@");
+            String localName = names[0].replaceAll("\\.","").replaceAll("\\+(.*)","");
+            String domainName = names[1];
+            System.out.println("LocalName: "+localName+"  "+"DomainName: "+domainName);
+
+            if(!set.contains(domainName+localName)){
+                set.add(domainName+localName);
+            }
+
+        }
+        return set.size();
+
+    }
+
+    public int firstUniqChar(String s) {
+        Set<Character> uniqueChars = new LinkedHashSet<>();
+        Set<Character> duplicateChars = new LinkedHashSet<>();
+        char[] chars = s.toCharArray();
+        for(char c:chars){
+            if(uniqueChars.contains(c)){
+                uniqueChars.remove(c);
+                duplicateChars.add(c);
+            }
+            else{
+                if(!duplicateChars.contains(c))
+                uniqueChars.add(c);
+            }
+        }
+        if(new ArrayList<>(uniqueChars).size()==0){return -1;}
+        return s.indexOf(new ArrayList<>(uniqueChars).get(0));
+
+    }
+
+    public String[] getFolderNames(String[] names) {
+        Set<String> folderNames = new LinkedHashSet<String>();
+        for(String name:names){
+            while(folderNames.contains(name)){
+                int number = getEndingNumber(name);
+                if(number!=0) {
+                   name = name.replaceAll("\\(\\d+\\)$", "");
+                }
+                number++;
+                name = name +"("+number+")";
+            }
+            folderNames.add(name);
+        }
+        return folderNames.toArray(new String[0]);
+    }
+
+    public static int getEndingNumber(String input) {
+        Pattern pattern = Pattern.compile("\\(\\d+\\)$");
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group().replaceAll("\\(","").replaceAll("\\)",""));
+        } else {
+            return 0;
+        }
+    }
     public static void main(String[] args){
         EasyProblems easyProblems = new EasyProblems();
-        easyProblems.findSubArrayWithSum(new int[]{23,2,4,6,7},6);
-
+    //  easyProblems.getFolderNames(new String[]{"pes","fifa","gta","pes(2019)"});
+        //easyProblems.getFolderNames(new String[]{"gta","gta(1)","gta","avalon"});
+        easyProblems.getFolderNames(new String[]{"onepiece","onepiece(1)","onepiece(2)","onepiece(3)","onepiece"});
 
     }
 }
